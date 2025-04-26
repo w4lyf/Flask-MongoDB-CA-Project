@@ -1,0 +1,709 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f5f7fa;
+}
+
+/* Header and Navigation */
+header {
+  background-color: #2c3e50;
+  color: white;
+  padding: 1rem 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.logo h1 {
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin-left: 2rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #3498db;
+}
+
+/* Main Content */
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+/* Hero Section */
+.hero {
+  background-color: #3498db;
+  color: white;
+  padding: 4rem 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-tertiary {
+  background-color: #f39c12;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #27ae60;
+}
+
+.btn-secondary:hover {
+  background-color: #c0392b;
+}
+
+.btn-tertiary:hover {
+  background-color: #d35400;
+}
+
+/* Features Section */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.feature-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.feature-card h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Authentication */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.auth-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.auth-footer a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+th, td {
+  padding: 0.8rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Alerts */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+/* Dashboard */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  margin: 0;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.dashboard-card h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.dashboard-card p {
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-card .count {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3498db;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Footer */
+footer {
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav {
+      flex-direction: column;
+  }
+  
+  .nav-links {
+      margin-top: 1rem;
+  }
+  
+  .nav-links li {
+      margin: 0 0.5rem;
+  }
+  
+  .hero h1 {
+      font-size: 2rem;
+  }
+}
+
+
+
+/* Additional Styles */
+.mt-3 {
+  margin-top: 1.5rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.card h4 {
+  color: #2c3e50;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.filter-container {
+  margin-bottom: 1.5rem;
+}
+
+.filter-container select {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Status Badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.badge-pending {
+  background-color: #f39c12;
+  color: white;
+}
+
+.badge-scheduled {
+  background-color: #3498db;
+  color: white;
+}
+
+
+/* Enhanced Login Page Styles */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  /* background: linear-gradient(to right, #6a11cb, #2575fc); */
+  padding: 1rem;
+}
+
+.auth-card {
+  background-color: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-card h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #2575fc;
+  outline: none;
+}
+
+.btn-block {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-block:hover {
+  background-color: #1a5fd1;
+}
+
+.auth-footer {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.auth-footer a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
+
+
+/* Doctor Dashboard Styles */
+
+.dashboard-header {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  flex: 1 1 300px;
+  max-width: 400px;
+}
+
+.dashboard-card h3 {
+  margin-bottom: 1rem;
+  color: #34495e;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #2575fc;
+  padding-bottom: 0.5rem;
+}
+
+.dashboard-card p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0.4rem 0;
+}
+
+.dashboard-card .count {
+  font-size: 2.5rem;
+  color: #2575fc;
+  font-weight: bold;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+/* Appointment Table Styles */
+.card {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.card h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  color: #34495e;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+table thead {
+  background-color: #2575fc;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #2575fc;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  transition: background-color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn:hover {
+  background-color: #1a5fd1;
+}
+
+.mt-3 {
+  margin-top: 1.5rem;
+  text-align: right;
+}
+
+/* Appointments Page Styles */
+
+.dashboard-header {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* Filter Dropdown Styling */
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.filter-container form select {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s ease;
+}
+
+.filter-container form select:focus {
+  outline: none;
+  border-color: #2575fc;
+}
+
+/* Table Container */
+.table-container {
+  overflow-x: auto;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 1000px;
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+table thead {
+  background-color: #2575fc;
+  color: white;
+  text-align: left;
+}
+
+table th,
+table td {
+  padding: 1rem;
+  border-bottom: 1px solid #eaeaea;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+table tbody tr:hover {
+  background-color: #f5f8ff;
+}
+
+/* Action Button */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #2575fc;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.4rem;
+  transition: background-color 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.btn:hover {
+  background-color: #1a5fd1;
+}
+
+/* No Appointment Text */
+.text-center {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 1rem 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .dashboard-title {
+      font-size: 2rem;
+  }
+
+  .filter-container {
+      padding: 0 1rem;
+  }
+
+  table th,
+  table td {
+      padding: 0.75rem;
+      font-size: 0.9rem;
+  }
+
+  .btn {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+  }
+}
+
+.ganesh {
+  display: flex;
+  justify-content: center;
+}

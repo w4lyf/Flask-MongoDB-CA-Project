@@ -1,0 +1,338 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    :root {
+        --primary: #1a73e8;
+        --primary-dark: #0d47a1;
+        --secondary: #5f6368;
+        --secondary-dark: #3c4043;
+        --light: #f8f9fa;
+        --dark: #202124;
+        --success: #0f9d58;
+        --danger: #d93025;
+        --border-radius: 8px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+
+    body {
+        font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        color: var(--dark);
+        line-height: 1.6;
+    }
+
+    /* Hero Section */
+    .hero {
+        position: relative;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+        height: 80vh;
+        min-height: 500px;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7));
+        z-index: 1;
+    }
+
+    .hero img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .hero-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        z-index: 2;
+        width: 90%;
+        max-width: 800px;
+        animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translate(-50%, -40%); }
+        to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+
+    .hero h1 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .hero p {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        margin: 15px 0 30px;
+        opacity: 0.9;
+    }
+
+    .hero-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: var(--transition);
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 160px;
+        box-shadow: var(--box-shadow);
+    }
+
+    .btn-primary {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+    }
+
+    /* Features Section */
+    .features {
+        display: flex;
+        justify-content: space-around;
+        padding: 80px 5%;
+        background-color: var(--light);
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .feature-card {
+        background: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        padding: 30px;
+        text-align: center;
+        width: calc(33.333% - 30px);
+        min-width: 250px;
+        flex-grow: 1;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 0;
+        background-color: var(--primary);
+        transition: var(--transition);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-card:hover::before {
+        height: 100%;
+    }
+
+    .feature-card h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: var(--primary);
+        font-size: 1.5rem;
+        position: relative;
+        display: inline-block;
+    }
+
+    .feature-card h3::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 3px;
+        background-color: var(--primary);
+        transition: var(--transition);
+    }
+
+    .feature-card:hover h3::after {
+        width: 60px;
+    }
+
+    .feature-card p {
+        color: var(--secondary);
+        margin-bottom: 0;
+        font-size: 1rem;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+        transition: var(--transition);
+    }
+
+    .feature-card:hover .feature-icon {
+        transform: scale(1.1);
+    }
+
+    /* For accessibility and responsiveness */
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    /* Responsive design */
+    @media (max-width: 992px) {
+        .feature-card {
+            width: calc(50% - 30px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero {
+            height: 70vh;
+        }
+        
+        .feature-card {
+            width: 100%;
+        }
+        
+        .hero-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .btn {
+            width: 80%;
+            max-width: 300px;
+        }
+    }
+
+    /* Focus indicators for accessibility */
+    .btn:focus, a:focus {
+        outline: 3px solid rgba(26, 115, 232, 0.5);
+        outline-offset: 2px;
+    }
+
+    /* Animation for scroll reveal */
+    .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+<section class="hero" role="banner">
+    <div class="hero-content">
+        <h1>Welcome to the Hospital Management System</h1>
+        <p>Your health is our priority - Advanced care with a human touch</p>
+        <div class="hero-buttons">
+            {% if not session.user_id %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login <span class="visually-hidden">to your account</span></a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-secondary">Register as Patient</a>
+            {% else %}
+                <a href="{{ url_for('main.dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="features" aria-label="Key features">
+    <div class="feature-card reveal">
+        <div>
+            <div class="feature-icon">👤</div>
+            <h3>For Patients</h3>
+            <p>Book appointments with specialized doctors and access your medical records securely from anywhere, anytime.</p>
+        </div>
+    </div>
+    <div class="feature-card reveal">
+        <div>
+            <div class="feature-icon">👨‍⚕</div>
+            <h3>For Doctors</h3>
+            <p>Manage your appointments efficiently, provide diagnoses, and monitor patient progress with our intuitive tools.</p>
+        </div>
+    </div>
+    <div class="feature-card reveal">
+        <div>
+            <div class="feature-icon">🏥</div>
+            <h3>For Administrators</h3>
+            <p>Oversee hospital operations, manage staff schedules, and ensure quality healthcare delivery with comprehensive analytics.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Simple scroll reveal animation
+    document.addEventListener('DOMContentLoaded', function() {
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        function reveal() {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', reveal);
+        // Initial check
+        reveal();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}My Appointments - Hospital Management System{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h2 class="dashboard-title">My Appointments</h2>
+</div>
+
+<div class="filter-container">
+    <form method="GET" action="{{ url_for('doctor.doctor_appointments') }}">
+        <select name="status" onchange="this.form.submit()">
+            <option value="all" {% if filter_status == 'all' %}selected{% endif %}>All Appointments</option>
+            <option value="pending" {% if filter_status == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="scheduled" {% if filter_status == 'scheduled' %}selected{% endif %}>Scheduled</option>
+            <option value="completed" {% if filter_status == 'completed' %}selected{% endif %}>Completed</option>
+            <option value="cancelled" {% if filter_status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+        </select>
+    </form>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Date & Time</th>
+                <th>Patient</th>
+                <th>Symptoms</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.appointment_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ appointment.patient_name }}</td>
+                <td>{{ appointment.symptoms[:50] + '...' if appointment.symptoms|length > 50 else appointment.symptoms }}</td>
+                <td>{{ appointment.status.capitalize() }}</td>
+                <td>
+                    <a href="{{ url_for('doctor.appointment_details', appointment_id=appointment._id) }}" class="btn btn-primary">View</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">No appointments found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,511 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment - Hospital Management System{% endblock %}
+
+{% block content %}
+<style>
+    :root {
+        --primary: #1a73e8;
+        --primary-light: #e8f0fe;
+        --primary-dark: #0d47a1;
+        --secondary: #5f6368;
+        --secondary-light: #f1f3f4;
+        --secondary-dark: #3c4043;
+        --success: #0f9d58;
+        --success-light: #e6f4ea;
+        --danger: #d93025;
+        --danger-light: #fce8e6;
+        --border-radius: 8px;
+        --card-shadow: 0 2px 6px rgba(60, 64, 67, 0.15);
+        --transition: all 0.3s ease;
+        --input-border: #dfe1e5;
+        --input-focus: #1a73e8;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px 16px;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .dashboard-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--secondary-dark);
+        margin: 0;
+        position: relative;
+        padding-left: 16px;
+    }
+
+    .dashboard-title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background-color: var(--primary);
+        border-radius: 4px;
+    }
+
+    .card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        padding: 32px;
+        margin-bottom: 24px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .booking-steps {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 32px;
+        position: relative;
+    }
+
+    .booking-steps::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: var(--secondary-light);
+        z-index: 1;
+    }
+
+    .step {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 2;
+        width: 33.333%;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        background-color: var(--secondary-light);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        color: var(--secondary);
+        margin-bottom: 8px;
+        position: relative;
+        transition: var(--transition);
+    }
+
+    .step.active .step-number {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .step-label {
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--secondary);
+        text-align: center;
+    }
+
+    .step.active .step-label {
+        color: var(--primary);
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--secondary-dark);
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        color: var(--secondary-dark);
+        transition: var(--transition);
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--input-focus);
+        box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    }
+
+    .form-control::placeholder {
+        color: #9aa0a6;
+    }
+
+    select.form-control {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235f6368' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        background-size: 16px;
+        padding-right: 40px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: var(--border-radius);
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+        transition: var(--transition);
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: var(--primary);
+        color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--primary-dark);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+        background-color: white;
+        color: var(--secondary-dark);
+        border: 1px solid var(--secondary-light);
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--secondary-light);
+    }
+
+    .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 32px;
+    }
+
+    .doctor-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .doctor-card {
+        border: 1px solid var(--input-border);
+        border-radius: var(--border-radius);
+        padding: 16px;
+        transition: var(--transition);
+        cursor: pointer;
+        position: relative;
+    }
+
+    .doctor-card:hover {
+        border-color: var(--primary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .doctor-card.selected {
+        border-color: var(--primary);
+        background-color: var(--primary-light);
+    }
+
+    .doctor-card.selected::before {
+        content: '✓';
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 24px;
+        height: 24px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+    }
+
+    .doctor-card input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .doctor-name {
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: var(--secondary-dark);
+    }
+
+    .doctor-spec {
+        font-size: 14px;
+        color: var(--secondary);
+        margin-bottom: 8px;
+    }
+
+    .time-slots {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .time-slot {
+        padding: 10px;
+        border: 1px solid var(--input-border);
+        border-radius: var(--border-radius);
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .time-slot:hover {
+        border-color: var(--primary);
+        background-color: var(--primary-light);
+    }
+
+    .time-slot.selected {
+        background-color: var(--primary);
+        color: white;
+        border-color: var(--primary);
+    }
+
+    .time-slot.disabled {
+        background-color: var(--secondary-light);
+        color: var(--secondary);
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 768px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-footer {
+            flex-direction: column-reverse;
+            gap: 16px;
+        }
+        
+        .form-footer .btn {
+            width: 100%;
+        }
+        
+        .card {
+            padding: 24px 16px;
+        }
+        
+        .doctor-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .step-label {
+            font-size: 12px;
+        }
+    }
+
+    .alert {
+        padding: 12px 16px;
+        margin-bottom: 24px;
+        border-radius: var(--border-radius);
+        font-size: 14px;
+    }
+
+    .alert-info {
+        background-color: var(--primary-light);
+        color: var(--primary-dark);
+        border-left: 4px solid var(--primary);
+    }
+
+    .date-picker-container {
+        position: relative;
+    }
+
+    .date-picker-container .calendar-icon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--secondary);
+        pointer-events: none;
+    }
+
+    /* custom calendar styling */
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        opacity: 0.6;
+        filter: invert(0.5);
+    }
+
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+        opacity: 1;
+    }
+</style>
+
+<div class="container">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">Book an Appointment</h2>
+    </div>
+
+    <div class="card">
+        <div class="booking-steps">
+            <div class="step active">
+                <div class="step-number">1</div>
+                <div class="step-label">Doctor Selection</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-label">Date & Time</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-label">Confirmation</div>
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Note:</strong> Appointments can be scheduled up to 30 days in advance. For urgent care, please contact our emergency department.
+        </div>
+
+        <form method="POST" action="{{ url_for('patient.book_appointment') }}" id="appointment-form">
+            <div class="form-group">
+                <label for="doctor_id">Select Doctor</label>
+                <select id="doctor_id" name="doctor_id" class="form-control" required>
+                    <option value="">Select Doctor</option>
+                    {% for doctor in doctors %}
+                    <option value="{{ doctor.user_id }}">{{ doctor.name }} - {{ doctor.specialization }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="appointment_date">Appointment Date & Time</label>
+                <div class="date-picker-container">
+                    <input type="datetime-local" id="appointment_date" name="appointment_date" class="form-control" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="symptoms">Symptoms or Issues</label>
+                <textarea id="symptoms" name="symptoms" class="form-control" rows="5" required placeholder="Please describe your symptoms or health issues in detail..."></textarea>
+                <div id="char-count" style="text-align: right; font-size: 12px; color: var(--secondary); margin-top: 8px;">0/500 characters</div>
+            </div>
+            
+            <div class="form-footer">
+                <a href="{{ url_for('patient.patient_dashboard') }}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set min date to today and max date to 30 days from now
+        const today = new Date();
+        const thirtyDaysLater = new Date();
+        thirtyDaysLater.setDate(today.getDate() + 30);
+        
+        const formatDateTime = (date) => {
+            // Format: YYYY-MM-DDThh:mm
+            return date.toISOString().slice(0, 16);
+        };
+        
+        const appointmentDateField = document.getElementById('appointment_date');
+        appointmentDateField.min = formatDateTime(today);
+        appointmentDateField.max = formatDateTime(thirtyDaysLater);
+        
+        // Round current time to nearest future 30-minute slot
+        const roundedMinutes = Math.ceil(today.getMinutes() / 30) * 30;
+        today.setMinutes(roundedMinutes);
+        today.setSeconds(0);
+        today.setMilliseconds(0);
+        
+        // Set the default value to the next available slot
+        appointmentDateField.value = formatDateTime(today);
+        
+        // Character counter for symptoms textarea
+        const symptomsField = document.getElementById('symptoms');
+        const charCount = document.getElementById('char-count');
+        const maxLength = 500;
+        
+        symptomsField.addEventListener('input', function() {
+            const currentLength = this.value.length;
+            charCount.textContent = `${currentLength}/${maxLength} characters`;
+            
+            if (currentLength > maxLength) {
+                charCount.style.color = 'var(--danger)';
+                this.value = this.value.substring(0, maxLength);
+                charCount.textContent = `${maxLength}/${maxLength} characters`;
+            } else {
+                charCount.style.color = 'var(--secondary)';
+            }
+        });
+        
+        // Form validation
+        const form = document.getElementById('appointment-form');
+        form.addEventListener('submit', function(e) {
+            const doctorId = document.getElementById('doctor_id').value;
+            const appointmentDate = document.getElementById('appointment_date').value;
+            const symptoms = document.getElementById('symptoms').value;
+            
+            if (!doctorId || !appointmentDate || !symptoms) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+                return false;
+            }
+            
+            // Check if appointment date is in the future
+            const selectedDate = new Date(appointmentDate);
+            if (selectedDate <= new Date()) {
+                e.preventDefault();
+                alert('Please select a future date and time for your appointment');
+                return false;
+            }
+            
+            return true;
+        });
+    });
+</script>
+{% endblock %}

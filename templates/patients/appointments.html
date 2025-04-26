@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+
+{% block title %}My Appointments - Hospital Management System{% endblock %}
+
+{% block content %}
+<style>
+    /* Dashboard Layout */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px 16px;
+        min-height: 535px;
+    }
+
+    /* Header Styling */
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .dashboard-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #3c4043;
+        margin: 0;
+        position: relative;
+        padding-left: 16px;
+    }
+
+    .dashboard-title::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background-color: #1a73e8;
+        border-radius: 4px;
+    }
+
+    /* Button Styling */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: #1a73e8;
+        color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-primary:hover {
+        background-color: #0d47a1;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+        background-color: white;
+        color: #3c4043;
+        border: 1px solid #dfe1e5;
+    }
+
+    .btn-secondary:hover {
+        background-color: #f1f3f4;
+    }
+
+    .btn-danger {
+        background-color: #ea4335;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #d93025;
+    }
+
+    .btn i {
+        margin-right: 6px;
+    }
+
+    /* Filter Section */
+    .filter-container {
+        background-color: #f8f9fa;
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .filter-form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .filter-label {
+        font-weight: 500;
+        color: #5f6368;
+        font-size: 14px;
+    }
+
+    .filter-select {
+        padding: 8px 32px 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #dfe1e5;
+        background-color: white;
+        font-size: 14px;
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235f6368' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+        cursor: pointer;
+    }
+
+    .appointments-count {
+        color: #5f6368;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .appointments-count span {
+        color: #1a73e8;
+        font-weight: 600;
+    }
+
+    /* Appointments Table */
+    .table-container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(60, 64, 67, 0.15);
+        overflow: hidden;
+        margin-bottom: 24px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+        text-align: left;
+        padding: 16px;
+        font-weight: 600;
+        color: #5f6368;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 16px;
+        border-bottom: 1px solid #f1f3f4;
+        color: #3c4043;
+        font-size: 14px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    /* Status Badges */
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        display: inline-block;
+    }
+
+    .status-pending {
+        background-color: #fef7e0;
+        color: #f9ab00;
+    }
+
+    .status-scheduled {
+        background-color: #e8f0fe;
+        color: #1a73e8;
+    }
+
+    .status-completed {
+        background-color: #e6f4ea;
+        color: #0f9d58;
+    }
+
+    .status-cancelled {
+        background-color: #fce8e6;
+        color: #d93025;
+    }
+
+    /* Actions Column */
+    .actions-cell {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+
+    /* Empty State */
+    .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 48px 24px;
+        text-align: center;
+    }
+
+    .empty-state-icon {
+        font-size: 48px;
+        color: #dadce0;
+        margin-bottom: 16px;
+    }
+
+    .empty-state-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #3c4043;
+        margin-bottom: 8px;
+    }
+
+    .empty-state-message {
+        color: #5f6368;
+        margin-bottom: 24px;
+        max-width: 400px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .filter-container {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .actions-cell {
+            flex-direction: column;
+        }
+    }
+
+    /* Add icon font */
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+</style>
+
+<div class="container">
+    <div class="dashboard-header">
+        <h2 class="dashboard-title">My Appointments</h2>
+        <a href="{{ url_for('patient.book_appointment') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Book New Appointment
+        </a>
+    </div>
+
+    <div class="filter-container">
+        <form method="GET" action="{{ url_for('patient.my_appointments') }}" class="filter-form">
+            <span class="filter-label">Filter by:</span>
+            <select name="status" class="filter-select" onchange="this.form.submit()">
+                <option value="all" {% if filter_status == 'all' %}selected{% endif %}>All Appointments</option>
+                <option value="pending" {% if filter_status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="scheduled" {% if filter_status == 'scheduled' %}selected{% endif %}>Scheduled</option>
+                <option value="completed" {% if filter_status == 'completed' %}selected{% endif %}>Completed</option>
+                <option value="cancelled" {% if filter_status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+        </form>
+        <div class="appointments-count">
+            Showing <span>{{ appointments|length }}</span> appointments
+        </div>
+    </div>
+
+    <div class="table-container">
+        {% if appointments %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Doctor</th>
+                    <th>Specialization</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>
+                        <div style="font-weight: 500;">{{ appointment.appointment_date.strftime('%B %d, %Y') }}</div>
+                        <div style="color: #5f6368;">{{ appointment.appointment_date.strftime('%I:%M %p') }}</div>
+                    </td>
+                    <td>Dr. {{ appointment.doctor_name }}</td>
+                    <td>{{ appointment.doctor_specialization }}</td>
+                    <td>
+                        <span class="status-badge status-{{ appointment.status }}">
+                            {{ appointment.status.capitalize() }}
+                        </span>
+                    </td>
+                    <td class="actions-cell">
+                        <a href="{{ url_for('patient.view_appointment', appointment_id=appointment._id) }}" class="btn btn-primary action-btn">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        {% if appointment.status in ['pending', 'scheduled'] %}
+                        <a href="{{ url_for('patient.cancel_appointment', appointment_id=appointment._id) }}" class="btn btn-danger action-btn" onclick="return confirm('Are you sure you want to cancel this appointment?');">
+                            <i class="fas fa-times"></i> Cancel
+                        </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-calendar-times"></i>
+            </div>
+            <div class="empty-state-title">No appointments found</div>
+            <div class="empty-state-message">
+                You don't have any appointments at the moment.
+                {% if filter_status != 'all' %}
+                Try changing your filter or
+                {% endif %}
+                book a new appointment to get started.
+            </div>
+            <a href="{{ url_for('patient.book_appointment') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Book New Appointment
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

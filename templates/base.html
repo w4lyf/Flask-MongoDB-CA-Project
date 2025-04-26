@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Hospital Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        main{
+            min-height: 534px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Hospital Management System</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('main.index') }}">Home</a></li>
+                
+                {% if session.user_id %}
+                    {% if session.role == 'admin' %}
+                        <li><a href="{{ url_for('admin.admin_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('admin.add_doctor') }}">Add Doctors</a></li>
+                    {% elif session.role == 'doctor' %}
+                        <li><a href="{{ url_for('doctor.doctor_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('doctor.doctor_appointments') }}">Appointments</a></li>
+                    {% elif session.role == 'patient' %}
+                        <li><a href="{{ url_for('patient.patient_dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('patient.book_appointment') }}">Book Appointment</a></li>
+                        <li><a href="{{ url_for('patient.my_appointments') }}">My Appointments</a></li>
+                    {% endif %}
+                    <li><a href="{{ url_for('auth.logout') }}">Logout ({{ session.username }})</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Hospital Management System</p>
+    </footer>
+    
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
